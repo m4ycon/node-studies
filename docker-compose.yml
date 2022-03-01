@@ -1,11 +1,7 @@
 
 services:
   server:
-    build:
-      context: .
-      # args:
-      #   - NODE_ENV=development
-      #   - DATABASE_URL=postgresql://postgres:postgres@db:5432/foca_expresso
+    build: .
     command: yarn dev
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432

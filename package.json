@@ -6,7 +6,8 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js --watch src -L",
     "knex:migrate": "docker-compose exec server yarn knex migrate:latest --knexfile knexfile.js",
-    "knex:migrate:make": "docker-compose exec server yarn knex migrate:make --knexfile knexfile.js"
+    "knex:migrate:make": "docker-compose exec server yarn knex migrate:make --knexfile knexfile.js",
+    "knex:migrate:rollback": "docker-compose exec server yarn knex migrate:rollback --all --knexfile knexfile.js"
   },
   "license": "MIT",
   "dependencies": {
