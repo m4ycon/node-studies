@@ -1,0 +1,22 @@
+
+services:
+  server:
+    build: .
+    command: yarn dev
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+    depends_on:
+      - database
+
+  database:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    # volumes:
+    #   - postgres-data:/var/lib/postgresql/data
