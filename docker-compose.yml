@@ -1,8 +1,14 @@
 
 services:
   server:
-    build: .
+    build:
+      context: .
+      # args:
+      #   - NODE_ENV=development
+      #   - DATABASE_URL=postgresql://postgres:postgres@db:5432/foca_expresso
     command: yarn dev
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432
     ports:
       - 3000:3000
     volumes:
@@ -10,7 +16,7 @@ services:
     depends_on:
       - database
 
-  database:
+  db:
     image: postgres
     ports:
       - 5432:5432
