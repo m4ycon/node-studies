@@ -1,5 +1,6 @@
 const express = require('express')
-const connection = require('./db/connection')
+
+const usersRoutes = require('./routes/users')
 
 const HOST = '0.0.0.0'
 const PORT = 3000
@@ -12,27 +13,6 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.route('/users')
-  .get(async (req, res) => {
-    try {
-      const users = await connection('users').select('*')
-      res.send(users)
-    } catch (error) {
-      res.status(500).send(error)
-    }
-  })
-  .post(async (req, res) => {
-    try {
-      const { name, email, password } = req.body
-      const userData = { name, email, password }
-      const user = await connection('users')
-        .insert(userData, 'id')
-        .returning('*')
-        .then(user => user[0])
-      res.send(user)
-    } catch (error) {
-      res.status(500).send(error)
-    }
-  })
+app.use('/users', usersRoutes)
 
 app.listen(PORT, HOST, () => console.log(`Up and running ${HOST}:${PORT}!`))
