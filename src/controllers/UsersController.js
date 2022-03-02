@@ -39,6 +39,15 @@ class UsersController {
       .returning('*')
       .then(user => user[0])
   }
+
+  async login(email, password) {
+    const user = await connection(this.tableName)
+      .select('id')
+      .where({ email, password })
+      .first()
+
+    return user
+  }
 }
 
 const usersController = new UsersController()
