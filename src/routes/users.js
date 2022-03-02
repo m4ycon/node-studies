@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const usersController = require('../controllers/UsersController')
+const authController = require('../controllers/AuthController')
 
 const router = Router()
 
@@ -25,6 +26,8 @@ router
       res.status(500).send(error)
     }
   })
+
+router.use('/:id', authController.verifyToken)
 
 router
   .route('/:id')
