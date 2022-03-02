@@ -55,7 +55,7 @@ class UsersService {
     if (!id)
       throw new Error('You must provide an id')
 
-    const user = await connection(this.tableName)
+    const user = await connection(this._tableName)
       .select('id')
       .where({ id })
       .first()

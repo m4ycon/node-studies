@@ -54,6 +54,18 @@ class UsersController {
     }
   }
 
+  async userExists(req, res, next) {
+    const { id } = req.params
+
+    if (!id)
+      res.status(400).send('You must provide an id').end()
+
+    const idExists = await usersService.idExists(id)
+    if (!idExists)
+      res.status(404).send('User not found').end()
+
+    next()
+  }
 }
 
 const usersController = new UsersController()

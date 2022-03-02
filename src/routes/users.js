@@ -12,6 +12,7 @@ router
   .post(usersController.store)
 
 router.use('/:id', authController.verifyToken)
+router.use('/:id', usersController.userExists)
 router
   .route('/:id')
   // Get a user
