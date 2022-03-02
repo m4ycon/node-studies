@@ -7,61 +7,18 @@ const router = Router()
 router
   .route('/')
   // Get all users
-  .get(async (req, res) => {
-    try {
-      const users = await usersController.index()
-      res.send(users)
-    } catch (error) {
-      res.status(500).send(error)
-    }
-  })
+  .get(usersController.index)
   // Create a user
-  .post(async (req, res) => {
-    try {
-      const { name, email, password } = req.body
-      const userData = { name, email, password }
-      const user = await usersController.store(userData)
-      res.send(user)
-    } catch (error) {
-      res.status(500).send(error)
-    }
-  })
+  .post(usersController.store)
 
 router.use('/:id', authController.verifyToken)
-
 router
   .route('/:id')
   // Get a user
-  .get(async (req, res) => {
-    try {
-      const { id } = req.params
-      const user = await usersController.show(id)
-      res.send(user)
-    } catch (error) {
-      res.status(500).send(error)
-    }
-  })
+  .get(usersController.show)
   // Update a user
-  .put(async (req, res) => {
-    try {
-      const { id } = req.params
-      const { name, email, password } = req.body
-      const userData = { name, password }
-      const user = await usersController.update(id, userData)
-      res.send(user)
-    } catch (error) {
-      res.status(500).send(error)
-    }
-  })
+  .put(usersController.update)
   // Delete a user
-  .delete(async (req, res) => {
-    try {
-      const { id } = req.params
-      const user = await usersController.destroy(id)
-      res.send(user)
-    } catch (error) {
-      res.status(500).send(error)
-    }
-  })
+  .delete(usersController.destroy)
 
 module.exports = router
