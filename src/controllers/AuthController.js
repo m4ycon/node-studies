@@ -1,21 +1,17 @@
-const jwt = require('jsonwebtoken')
+const authService = require('../services/auth')
+const userService = require('../services/users')
 
 class AuthController {
-  createToken(payload) {
-    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' })
-  }
+  async createToken(req, res) {
+    const { email, password } = req.body
 
-  verifyToken(req, res, next) {
-    // works as a middleware
-    const token = req.headers.authorization
-    if (!token) return res.status(401).json({ error: 'No token provided' })
+    const user = await userService.login(email, password)
+    if (user) {
+      const token = authService.createToken({ id: user.id })
+      return res.json({ token })
+    }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) return res.status(401).json({ error: 'Invalid token' }).end()
-
-      req.userId = decoded.id
-      next()
-    })
+    res.status(401).json({ error: 'Invalid credentials' })
   }
 }
 
