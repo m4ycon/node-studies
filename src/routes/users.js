@@ -4,17 +4,15 @@ const authController = require('../controllers/AuthController')
 
 const router = Router()
 
-router
-  .route('/')
-  // Get all users
-  .get(usersController.index)
-  // Create a user
-  .post(usersController.store)
+router.get('/all', usersController.index)
 
-router.use('/:id', authController.verifyToken)
-router.use('/:id', usersController.userExists)
+// Create a user
+router.post('/', usersController.store)
+
 router
-  .route('/:id')
+  .use('/', authController.verifyToken)
+  .use('/', usersController.userExists)
+  .route('/')
   // Get a user
   .get(usersController.show)
   // Update a user

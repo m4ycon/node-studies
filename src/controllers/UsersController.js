@@ -12,7 +12,7 @@ class UsersController {
 
   async show(req, res) {
     try {
-      const { id } = req.params
+      const id = req.userId
       const user = await usersService.show(id)
       res.send(user)
     } catch (error) {
@@ -33,7 +33,7 @@ class UsersController {
 
   async update(req, res) {
     try {
-      const { id } = req.params
+      const id = req.userId
       const { name, password } = req.body
       const userData = { name, password }
       const user = await usersService.update(id, userData)
@@ -45,7 +45,7 @@ class UsersController {
 
   async destroy(req, res) {
     try {
-      const { id } = req.params
+      const id = req.userId
       const user = await usersService.destroy(id)
       res.send(user)
     } catch (error) {
@@ -54,7 +54,7 @@ class UsersController {
   }
 
   async userExists(req, res, next) {
-    const { id } = req.params
+    const id = req.userId
 
     if (!id)
       res.status(400).send('You must provide an id').end()
