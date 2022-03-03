@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken')
+
 const authService = require('../services/auth')
 const userService = require('../services/users')
 

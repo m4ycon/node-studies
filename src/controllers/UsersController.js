@@ -1,4 +1,3 @@
-const connection = require('../db/connection')
 const usersService = require('../services/users')
 
 class UsersController {
